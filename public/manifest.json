@@ -1,0 +1,40 @@
+{
+    "manifest_version": 3,
+    "name": "example extension",
+    "version": "1.0.0",
+    "description": "Welcome full example of chrome extension",
+    "icons": {
+      "48": "icons/research-icon-48.png",
+      "128": "icons/research-icon-128.png"
+    },
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "example extension",
+        "default_icon": {
+          "16": "icons/research-icon-16.png",
+          "48": "icons/research-icon-48.png",
+          "128": "icons/research-icon-128.png"
+  
+        }
+      },
+      "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+      },
+      "permissions": ["activeTab", "contextMenus","storage"], 
+      "content_scripts": [
+        {
+          "matches": ["http://*/*", "https://*/*"],
+          "js": ["./js/content.js"]
+        }
+      ],
+      "web_accessible_resources": [
+        {
+          "resources": ["icons/research-icon-16.png","icons/research-icon-24.png"],
+          "matches": ["<all_urls>"]
+        }
+      ],
+      "background": {
+        "service_worker": "./js/background.js"
+      }
+    }

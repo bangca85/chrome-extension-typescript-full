@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 300px;
+    /* height: 400px; */
+    color: #2c2c2c;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+.App {
+    text-align: center;
+    max-width: 300px;
+    /* Adjust based on Chrome policy */
+  }
+  
+  .header {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    align-items: center;
+    color: yellowgreen;
+    background-color: #f8f8f8;
+  }
+  
+  .header .icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .contentApp {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e8e8e8; 
+    align-items: center;
+    min-height: 60px;
+    width: 100%;
+  } 
+  .searchBar {
+    display: flex;
+    align-items: center; 
+    width: 100%;
+  }
+  
+  
+  .searchBar input {
+    width: 89%;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 10px;
+    font-size: 13px;
+    margin: 0 auto;
+  }
+  
+  .searchBar input:focus {
+    outline: none;
+  }
+  
+  .icon {
+   position: absolute;
+    right: 10px;
+    cursor: pointer; 
+    background: transparent;
+    border: 0;
+  }
+  
+  .markdown-content p {
+    padding-top: 10px; 
+  }
+  
+  .results {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 10px 10px;
+    text-align: left;
+    background-color: #e8e8e8;
+  }
+  
+  .results-content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: left;
+    background-color: #fff;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+  }
+  

@@ -46,8 +46,7 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-        console.log("handleClickOutside");
+    const handleClickOutside = (event: MouseEvent) => { 
       if (
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)

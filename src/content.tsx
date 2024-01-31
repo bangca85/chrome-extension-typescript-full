@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import FloatingIcon from "./component/FloatingIcon";
 import ResultsModal from "./component/ResultsModal";
@@ -9,6 +9,7 @@ const ExtensionApp = () => {
   const [iconPosition, setIconPosition] = useState({ x: 0, y: 0 });
   const [selectedText, setSelectedText] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const modalOpenRequested = useRef(false);
 
   useEffect(() => {
     const handleSelectionChange = () => {
@@ -17,7 +18,6 @@ const ExtensionApp = () => {
         const range = selection.getRangeAt(0);
         const rects = range.getClientRects();
         const lastRect = rects[rects.length - 1];
-        console.log("Selection:handleSelectionChange", selection);
         if (lastRect) {
           setSelectedText(selection.toString());
           setIconPosition({ x: lastRect.right, y: lastRect.bottom });
@@ -31,28 +31,28 @@ const ExtensionApp = () => {
     };
 
     const handleMouseUp = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      if (modalOpenRequested.current) {
+        modalOpenRequested.current = false;
+        return; // Exit early
+      }
       const data = await getExtensionSettings();
-      const selection = window.getSelection(); 
-      console.log("Selection:handleMouseUp", selection);
-      console.log("Selection:isSelecting", isSelecting);
-      console.log("Selection:showIcon", showIcon);
-      console.log("Selection:showModal", showModal);
-      console.log("Selection:data", data);
-      if (!isSelecting) return;
+      const selection = window.getSelection();
+
       if (selection && selection.toString().trim().length > 0) {
-        if (data.displayOption === "iconClick" && !showModal) {
+        if (data.displayOption === "iconClick") {
           setShowIcon(true);
-          setShowModal(false); 
-        } 
-        if (data.displayOption === "displayPopup" || showModal) {
+          setShowModal(false);
+        } else if (data.displayOption === "displayPopup") {
           setShowModal(true);
           setShowIcon(false);
-          setIsSelecting(false);
+        } else {
+          setShowIcon(false);
+          setShowModal(false);
         }
       } else {
         setShowIcon(false);
         setShowModal(false);
-        setIsSelecting(false);
       }
     };
 
@@ -63,18 +63,18 @@ const ExtensionApp = () => {
       document.removeEventListener("selectionchange", handleSelectionChange);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [showIcon, showModal,isSelecting]);
+  }, [showIcon, showModal, isSelecting]);
 
   const handleIconClick = (event: React.MouseEvent) => {
-    console.log("handleIconClick");
-    event.stopPropagation(); // Stop event from propagating to document
+    event.stopPropagation();
+    modalOpenRequested.current = true;
     setShowModal(true);
     setShowIcon(false);
   };
 
-  const handleCloseModal = () => { 
-    setIsSelecting(false); 
-    setShowModal(false); 
+  const handleCloseModal = () => {
+    setIsSelecting(false);
+    setShowModal(false);
   };
 
   return (
